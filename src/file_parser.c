@@ -34,9 +34,9 @@ float* parseFile(char* filename, float(*convert)(char*), size_t* return_len) {
     }
 
     // Read and convert one line at a time using the convert function pointer
-    // ToDo: fix this and reduce the number of floats allocated initally
     while((read = getline(&line, &len, ptr_file)) != -1) {
         
+        // Expand the memory space for the returned list of floats
         if (*return_len >= results_len) {
             results_len *= 2;
             float* new_results = realloc(results, sizeof(float)*results_len);
@@ -49,6 +49,7 @@ float* parseFile(char* filename, float(*convert)(char*), size_t* return_len) {
             }
         }
         
+        // Convert the string and add to the list to return
         results[(*return_len)++] = convert(line);
     }
 
@@ -62,29 +63,27 @@ float* parseFile(char* filename, float(*convert)(char*), size_t* return_len) {
     return results;
 }
 
+size_t strlen(char* input_str) {
+    size_t len = 0;
+
+    while (input_str[len++] != '\n' || input_str[len] != '\0');
+
+    return len;
+}
+
+void strrev(char* input_str) {
+    // Set the length of the string as one less to not reverse the null termination
+    size_t len = strlen(input_str) - 1;
+
+    for (int i=0; i<(len/2); i++){
+        char temp = input_str[i];
+        input_str[i] = input_str[len-1-i];
+        input_str[len-1-i] = temp;
+    }
+
+}
 
 float reverseStringToFloat(char* input_str) {
-    int i = 0;
-    int j = 0;
-    char* reversed_string;
-    float converted;
-
-    // Find the size of the input string and make an appropriatly sized buffer
-    while (input_str[i++] != '\n' || input_str[i] != '\0'); 
-    reversed_string = malloc(sizeof(char)*(i+1));
-
-    // Cycle through the string and reverse it, ending with a null
-    while (--i >= 0) {
-        reversed_string[j++] = input_str[i];
-    }
-    reversed_string[j] = '\0';
-
-    // Convert to a float
-    converted = atof(reversed_string);
-
-    // Free up the memory
-    free(reversed_string);
-
-    // Convert to float and return
-    return converted;
+    strrev(input_str);
+    return atof(input_str);
 }
