@@ -30,6 +30,7 @@ float* parseFile(char* filename, float(*convert)(char*), size_t* return_len) {
     results = malloc(sizeof(float)*results_len);
     if (results == NULL) {
         printf("Out of memory\n");
+        fclose(ptr_file);
         return NULL;
     }
 
@@ -43,6 +44,7 @@ float* parseFile(char* filename, float(*convert)(char*), size_t* return_len) {
             if (new_results == NULL) {
                 printf("Out of memory\n");
                 free(results);
+                fclose(ptr_file);
                 return NULL;
             } else {
                 results = new_results;
@@ -58,7 +60,7 @@ float* parseFile(char* filename, float(*convert)(char*), size_t* return_len) {
         free(line);
     }
 
-    printf("Returning list of floats, size %i \n", *return_len);
+    // printf("Returning list of floats, size %i \n", *return_len);
 
     return results;
 }
