@@ -15,21 +15,21 @@ float* parseFile(char* filename, float(*convert)(char*), size_t* return_len) {
 
     // Check that a function was correctly passed
     if (convert == NULL) {
-        printf("Not appropriate convertion function passed\n");
+        fprintf(stderr, "ERROR: Not appropriate convertion function passed\n");
         return NULL;
     }
 
     // Open the file
     ptr_file = fopen(filename, "r");
     if (!ptr_file) {
-        printf("Could not open file\n");
+        perror("ERROR");
         return NULL;
     }
 
     // Allocate output buffer
     results = malloc(sizeof(float)*results_len);
     if (results == NULL) {
-        printf("Out of memory\n");
+        perror("ERROR");
         fclose(ptr_file);
         return NULL;
     }
@@ -42,7 +42,7 @@ float* parseFile(char* filename, float(*convert)(char*), size_t* return_len) {
             results_len *= 2;
             float* new_results = realloc(results, sizeof(float)*results_len);
             if (new_results == NULL) {
-                printf("Out of memory\n");
+                perror("ERROR");
                 free(results);
                 fclose(ptr_file);
                 return NULL;
@@ -68,7 +68,7 @@ float* parseFile(char* filename, float(*convert)(char*), size_t* return_len) {
 size_t strlen(char* input_str) {
     size_t len = 0;
 
-    while (input_str[len++] != '\n' || input_str[len] != '\0');
+    while (input_str[len++] != '\0') {}
 
     return len;
 }

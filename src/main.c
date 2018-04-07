@@ -50,7 +50,7 @@ int main (int argc, char *argv[]) {
         in_file = argv[1];
         out_file = argv[2];
     } else {
-        printf("Please pass in both input and output path \n");
+        fprintf(stderr, "ERROR: Please pass in both input and output path \n");
         return 1;
     }
 
@@ -66,7 +66,7 @@ int main (int argc, char *argv[]) {
     FILE* ptr_file;
     ptr_file = fopen(out_file, "w");
     if (!ptr_file) {
-        printf("Could not open output file\n");
+        perror("ERROR");
         return 1;
     }
     fprintf(ptr_file, "%f\n", on_time);

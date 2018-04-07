@@ -15,7 +15,7 @@ with open("test_file.txt", "w") as f:
             on_count += on
             lines += 1
 
-            value = on + (-0.5 + rd.random()/10)
+            value = on + (rd.random()/10)
 
             values.append(value)
 
@@ -24,8 +24,8 @@ with open("test_file.txt", "w") as f:
 
 print (on_count / lines)
 
-# plt.plot(values)
-# plt.show()
+plt.plot(values)
+plt.show()
 
 ## -------------- Do k-means clustering on the values ------------------------------
 print("Calculate k-means")
@@ -37,7 +37,7 @@ means = []
 for k in range(0, ks):
     means.append(values[rd.randrange(0, lines, 1)])
 
-print "Init means: ", means
+print ("Init means: ", means)
 
 prev_means = []
 
@@ -84,4 +84,4 @@ while (1):
         print("Reached ittr limit")
         break
 
-print "Final means: ", means
+print ("Final means: ", means)
