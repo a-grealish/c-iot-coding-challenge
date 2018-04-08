@@ -8,12 +8,12 @@
 void setUp (float** data, int** cluster, int len, int k) {
 
 	*data = malloc(sizeof(float)*len);
-	if (data == NULL) {
+	if (*data == NULL) {
 		perror("ERROR");
 	}
 
 	*cluster = malloc(sizeof(int)*len);
-	if (cluster == NULL) {
+	if (*cluster == NULL) {
 		perror("ERROR");
 	}
 
