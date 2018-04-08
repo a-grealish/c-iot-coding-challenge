@@ -7,8 +7,10 @@
 #include "cluster.h"
 
 /**
- *
- *
+ * Takes input list, clusters the data and calculates the ratio of on time
+ * @params values - list of raw data readings
+ * @params len length of the input list
+ * @return float that is the ratios of time on
  */
 float calculateOnTime(float* values, int len) {
     int* cluster;
@@ -20,6 +22,7 @@ float calculateOnTime(float* values, int len) {
         return 0;
     }
 
+    // Cluster with data with one of the two algos
     // twoGroupMidpointCluster(values, cluster, len);
     k_MeansCluster1d(values, cluster, len, 2);
 
