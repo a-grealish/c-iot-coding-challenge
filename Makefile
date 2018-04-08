@@ -1,17 +1,29 @@
+####################################################################################################
+# Config
+
+NAME = on_time_calc
+
+CC = gcc
+CFLAGS = -Wall
+
+SRCS = ./src/*.c
+
+####################################################################################################
+
 all:
-	gcc -Wall  ./src/*.c -o ./bin/out
+	$(CC) $(CFLAGS) $(SRCS) -o ./bin/$(NAME)
 
 clean:
 	$(RM) ./bin/out
 
 run:
-	./bin/out ./data/test_file.txt ./data/out_file.txt
+	./bin/$(NAME) ./data/test_file.txt ./data/out_file.txt
 
 cppcheck:
 	cppcheck --enable=all ./src/
 
 test:
-	gcc ./src/file_parser.c ./tests/*.c -pthread -lcheck_pic -pthread -lrt -lm -lsubunit -o ./bin/test; ./bin/test
+	$(CC) -ggdb -pthread $(CFLAGS)  ./src/file_parser.c ./src/cluster.c ./tests/*.c -lcheck_pic -lrt -lm -lsubunit -o ./bin/test && ./bin/test
 
 memtest:
-	valgrind --tool=memcheck --leak-check=full ./bin/out 
+	valgrind --tool=memcheck --leak-check=full ./bin/$(NAME) 
