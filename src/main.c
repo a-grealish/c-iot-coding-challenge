@@ -1,35 +1,33 @@
 #include "main.h"
+#include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
+#include <stddef.h>
 
 #include "file_parser.h"
+#include "cluster.h"
 
 /**
- * A function which takes a lists of floats, finds the midpoint between mid and 
- * max and uses this to classify each point. > the midpoint is classified as on.
- * @param values a pointer to an array of floats
- * @param len the number of floats in the array
- * @returns float which is the proportion of time the unit is on
+ *
+ *
  */
-float calculateOnTime(float* values, size_t len) {
-    float min = INFINITY;
-    float max = -INFINITY;
-    float threshold = 0;
-
-    for (int i=0; i<len; i++){
-        if (values[i] < min)
-            min = values[i];
-        if (values[i] > max)
-            max = values[i];
-    }
-    threshold = min + ((max-min)/2.0);
-    // printf("Min: %f, Max: %f, Threshold: %f \n", min, max, threshold);
-
+float calculateOnTime(float* values, int len) {
+    int* cluster;
     int on = 0;
-    for (int i=0; i<len; i++) {
-        if (values[i] > threshold)
-            on++;
+
+    cluster = malloc(sizeof(int)*len);
+    if (cluster == NULL) {
+        perror("ERROR");
+        return 0;
     }
+
+    // twoGroupMidpointCluster(values, cluster, len);
+    k_MeansCluster1d(values, cluster, len, 2);
+
+    for (int i=0; i<len; i++) {
+        if (cluster[i] != 0)
+            on += 1;
+    }
+
     float on_ratio = (float)on / (float)len;
 
     return on_ratio;

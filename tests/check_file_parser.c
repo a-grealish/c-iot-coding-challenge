@@ -40,12 +40,10 @@ START_TEST (testReverseStringToFloat_non_numeric) {
 END_TEST
 
 START_TEST (testReverseStringToFloat_no_number) {
-    // Will reverse the string and ignore chars after any
-    // non-numerical char as standard atof
-    float test_val = 1.0;
+    // Will reverse the string and return 0 
+    // as no valid string found
+    float test_val = 0.0;
     char input[] = "abcde";
-
-    printf("%f \n", reverseStringToFloat(&input[0]));
 
     ck_assert(reverseStringToFloat(&input[0]) == test_val);
 }
@@ -59,7 +57,6 @@ Suite * FileParserSuite(void)
 
     s = suite_create("FileParser");
 
-    /* Core test case */
     tc_core = tcase_create("Core");
 
     tcase_add_test(tc_core, testReverseStringToFloat_normal);

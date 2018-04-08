@@ -1,5 +1,6 @@
 #ifndef FILE_PARSER_H
 #define FILE_PARSER_H
+#include <stddef.h>
 
 /**
  * a function which loads a file containing a list of float values 

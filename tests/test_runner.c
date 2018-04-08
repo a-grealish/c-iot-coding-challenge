@@ -4,6 +4,7 @@
 
 // Pull in the test suites 
 #include "check_file_parser.h"
+#include "check_cluster.h"
 
 int main(void) {
     int number_failed;
@@ -12,6 +13,7 @@ int main(void) {
     
     s = FileParserSuite();
     sr = srunner_create(s);
+    srunner_add_suite(sr, ClusterSuite());
     
     srunner_run_all(sr, CK_NORMAL);
     number_failed = srunner_ntests_failed(sr);
